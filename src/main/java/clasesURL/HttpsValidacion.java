@@ -52,17 +52,18 @@ public class HttpsValidacion {
 					isPaginas = new InputStreamReader(url.openStream());
 					bfPaginas = new BufferedReader(isPaginas);
 					
-					// Introducimos las lineas leidas en un "texto"
+					// Introducimos el HTML de la pagina en un string 
 					while ((inputLine = bfPaginas.readLine()) != null) {
 						inputText = inputText + inputLine;
 					}
 
 	
-					
+					//Buscamos los href que señalan el inicio de enlaces en HTML
 					inicioLink = inputText.indexOf(etiquetaEnlace);
 					
 					while(inicioLink != -1){
 						
+						//los enlaces tras el href se encuentran entre '' o "", que localizamos en cadenas de 200 caracteres posteriores al href
 						substringaux = inputText.substring(inicioLink,inicioLink+200);
 						if(substringaux.contains("\"")){
 							substringaux = substringaux.split("\"")[1];
@@ -71,11 +72,13 @@ public class HttpsValidacion {
 								substringaux = substringaux.split("'")[1];
 						}
 						}
+						//solo guardaremos los enlaces de otras páginas web
 							if(esHTTP(substringaux)){
 								urlaux = new MiUrl(substringaux);
 								urlsPagWeb.add(urlaux);
 							}
-
+							
+						//buscamos el siguente href
 						inicioLink = inputText.indexOf(etiquetaEnlace,inicioLink+1);
 					}
 	
@@ -85,6 +88,7 @@ public class HttpsValidacion {
 				} catch (IOException e) {
 					Logger.getGlobal().log(Level.SEVERE, "URL introducida no es correcta 2" + e.getMessage());
 				}
+				//borramos inputText para evitar que se sobeescriba el analisis con futuras busquedas
 				inputText="";
 				return (urlsPagWeb);
 				
