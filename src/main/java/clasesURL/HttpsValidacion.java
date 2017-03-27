@@ -11,6 +11,9 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.net.ssl.HttpsURLConnection;
+import java.security.cert.Certificate;
+
 import org.springframework.stereotype.Component;
 
 import DTO.MiUrl;
@@ -72,7 +75,7 @@ public class HttpsValidacion {
 								substringaux = substringaux.split("'")[1];
 						}
 						}
-						//solo guardaremos los enlaces de otras páginas web
+						//solo guardaremos los enlaces HTTP o HTTPS
 							if(esHTTP(substringaux)){
 								urlaux = new MiUrl(substringaux);
 								urlsPagWeb.add(urlaux);
@@ -100,5 +103,28 @@ public class HttpsValidacion {
 				}
 				return false;
 			}
-	
+			public boolean esHTTPS(String link){
+				if(link.contains("https")){
+					return true;
+				}
+				return false;
+			}
+			
+			public Certificate[] getCerts(MiUrl enlace){
+				Certificate[] certs=null;
+				String dir = enlace.getUrlcompleta();
+				URL urlaux;
+				try {
+					urlaux = new URL(dir);
+				
+				HttpsURLConnection con = (HttpsURLConnection) urlaux.openConnection();
+				con.connect();
+				certs = con.getServerCertificates();
+				} catch (MalformedURLException e) {
+					Logger.getGlobal().log(Level.SEVERE, "URL introducida no es correcta" + e.getMessage());
+				} catch (IOException e) {
+					Logger.getGlobal().log(Level.SEVERE, "URL introducida no es correcta 2" + e.getMessage());
+				}
+				return certs;
+			}
 }
