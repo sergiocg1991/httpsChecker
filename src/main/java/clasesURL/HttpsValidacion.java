@@ -24,7 +24,7 @@ public class HttpsValidacion {
 			final int FINAL_CADENA_HTTP=5;
 			final int INICIO_CADENA_HTTP=1;
 			
-			
+			//prueba local1
 			public List<MiUrl> obtenerUrls(String urlPrincipal){
 				
 				ArrayList<MiUrl> urlsPagWeb = new ArrayList<MiUrl>();
