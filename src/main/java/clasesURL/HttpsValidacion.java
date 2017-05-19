@@ -3,6 +3,7 @@ package clasesURL;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
@@ -33,7 +34,7 @@ public class HttpsValidacion {
 				ArrayList<MiUrl> urlsPagWeb = new ArrayList<MiUrl>();
 				InputStreamReader isPaginas = null;
 				BufferedReader bfPaginas = null;
-				URLConnection conexion = null;
+				HttpURLConnection conexion = null;
 				URL url;
 				String[] links = new String[30];
 				int numeroLink = 0;
@@ -48,7 +49,8 @@ public class HttpsValidacion {
 				try {
 					// Se abre la conexión
 					url = new URL(urlPrincipal);
-					conexion = url.openConnection();
+					conexion =(HttpURLConnection) url.openConnection();
+					conexion.addRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.110 Safari/537.36");
 					conexion.connect();
 
 					// Lectura
@@ -87,9 +89,9 @@ public class HttpsValidacion {
 	
 					
 				} catch (MalformedURLException e) {
-					Logger.getGlobal().log(Level.SEVERE, "URL introducida no es correcta" + e.getMessage());
+					Logger.getGlobal().log(Level.SEVERE, e.getMessage());
 				} catch (IOException e) {
-					Logger.getGlobal().log(Level.SEVERE, "URL introducida no es correcta 2" + e.getMessage());
+					Logger.getGlobal().log(Level.SEVERE, e.getMessage());
 				}
 				//borramos inputText para evitar que se sobeescriba el analisis con futuras busquedas
 				inputText="";
