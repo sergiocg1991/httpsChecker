@@ -31,11 +31,12 @@ public class HelloWorldController {
 		
 		name = (name.split(","))[0];
 		
-		
+		//variables raras raras
 		List<MiUrl> misurls = validacion.obtenerUrls(name);
 		
 		List<String> nombreurl = new ArrayList<String>();
 		
+		//llamar al metodo getCerts¿?¿?¿?¿
 		for(MiUrl urla: misurls){
 			nombreurl.add(urla.getUrlcompleta());
 			}

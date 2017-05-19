@@ -3,6 +3,7 @@ package clasesURL;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
@@ -10,6 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.net.ssl.HttpsURLConnection;
+import java.security.cert.Certificate;
 
 import org.springframework.stereotype.Component;
 
@@ -30,7 +34,7 @@ public class HttpsValidacion {
 				ArrayList<MiUrl> urlsPagWeb = new ArrayList<MiUrl>();
 				InputStreamReader isPaginas = null;
 				BufferedReader bfPaginas = null;
-				URLConnection conexion = null;
+				HttpURLConnection conexion = null;
 				URL url;
 				String[] links = new String[30];
 				int numeroLink = 0;
@@ -45,24 +49,26 @@ public class HttpsValidacion {
 				try {
 					// Se abre la conexión
 					url = new URL(urlPrincipal);
-					conexion = url.openConnection();
+					conexion =(HttpURLConnection) url.openConnection();
+					conexion.addRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.110 Safari/537.36");
 					conexion.connect();
 
 					// Lectura
 					isPaginas = new InputStreamReader(url.openStream());
 					bfPaginas = new BufferedReader(isPaginas);
 					
-					// Introducimos las lineas leidas en un "texto"
+					// Introducimos el HTML de la pagina en un string 
 					while ((inputLine = bfPaginas.readLine()) != null) {
 						inputText = inputText + inputLine;
 					}
 
 	
-					
+					//Buscamos los href que señalan el inicio de enlaces en HTML
 					inicioLink = inputText.indexOf(etiquetaEnlace);
 					
 					while(inicioLink != -1){
 						
+						//los enlaces tras el href se encuentran entre '' o "", que localizamos en cadenas de 200 caracteres posteriores al href
 						substringaux = inputText.substring(inicioLink,inicioLink+200);
 						if(substringaux.contains("\"")){
 							substringaux = substringaux.split("\"")[1];
@@ -71,20 +77,23 @@ public class HttpsValidacion {
 								substringaux = substringaux.split("'")[1];
 						}
 						}
+						//solo guardaremos los enlaces HTTP o HTTPS
 							if(esHTTP(substringaux)){
 								urlaux = new MiUrl(substringaux);
 								urlsPagWeb.add(urlaux);
 							}
-
+							
+						//buscamos el siguente href
 						inicioLink = inputText.indexOf(etiquetaEnlace,inicioLink+1);
 					}
 	
 					
 				} catch (MalformedURLException e) {
-					Logger.getGlobal().log(Level.SEVERE, "URL introducida no es correcta" + e.getMessage());
+					Logger.getGlobal().log(Level.SEVERE, e.getMessage());
 				} catch (IOException e) {
-					Logger.getGlobal().log(Level.SEVERE, "URL introducida no es correcta 2" + e.getMessage());
+					Logger.getGlobal().log(Level.SEVERE, e.getMessage());
 				}
+				//borramos inputText para evitar que se sobeescriba el analisis con futuras busquedas
 				inputText="";
 				return (urlsPagWeb);
 				
@@ -96,5 +105,28 @@ public class HttpsValidacion {
 				}
 				return false;
 			}
-	
+			public boolean esHTTPS(String link){
+				if(link.contains("https")){
+					return true;
+				}
+				return false;
+			}
+			
+			public Certificate[] getCerts(MiUrl enlace){
+				Certificate[] certs=null;
+				String dir = enlace.getUrlcompleta();
+				URL urlaux;
+				try {
+					urlaux = new URL(dir);
+				
+				HttpsURLConnection con = (HttpsURLConnection) urlaux.openConnection();
+				con.connect();
+				certs = con.getServerCertificates();
+				} catch (MalformedURLException e) {
+					Logger.getGlobal().log(Level.SEVERE, "URL introducida no es correcta" + e.getMessage());
+				} catch (IOException e) {
+					Logger.getGlobal().log(Level.SEVERE, "URL introducida no es correcta 2" + e.getMessage());
+				}
+				return certs;
+			}
 }
