@@ -22,7 +22,7 @@ import DTO.MiUrl;
 @Component
 public class HttpsValidacion {
 
-			
+			//holapepguardiola
 			String inputLine = "";
 			String inputText = "";
 			final int FINAL_CADENA_HTTP=5;
