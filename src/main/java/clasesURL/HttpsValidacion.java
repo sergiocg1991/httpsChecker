@@ -22,13 +22,13 @@ import DTO.MiUrl;
 @Component
 public class HttpsValidacion {
 
-			//holapepguardiola
+
 			String inputLine = "";
 			String inputText = "";
 			final int FINAL_CADENA_HTTP=5;
 			final int INICIO_CADENA_HTTP=1;
 			
-			
+		
 			public List<MiUrl> obtenerUrls(String urlPrincipal){
 				
 				ArrayList<MiUrl> urlsPagWeb = new ArrayList<MiUrl>();

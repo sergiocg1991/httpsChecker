@@ -28,7 +28,7 @@ public class HelloWorldController {
 	public ModelAndView welcomeMessage(
 			@RequestParam(value = "name", required = false) String name) {
 		
-		
+
 		name = (name.split(","))[0];
 		
 		//variables raras raras
