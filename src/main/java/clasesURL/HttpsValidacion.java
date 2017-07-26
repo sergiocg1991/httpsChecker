@@ -28,14 +28,10 @@ public class HttpsValidacion {
 			String inputText = "";
 			final int FINAL_CADENA_HTTP=5;
 			final int INICIO_CADENA_HTTP=1;
-<<<<<<< HEAD
-			
-		
-			public List<MiUrl> obtenerUrls(String urlPrincipal){
-=======
+
 
 			public List<ComponenteWeb> obtenerUrls(String urlPrincipal){
->>>>>>> refs/heads/master
+
 				
 				ArrayList<MiUrl> urlsPagWeb = new ArrayList<MiUrl>();
 				InputStreamReader isPaginas = null;
