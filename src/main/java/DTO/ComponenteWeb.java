@@ -2,8 +2,9 @@ package DTO;
 
 public class ComponenteWeb {
 
-	
+	//tipo del componente
 	private String tipo;
+	//enlace que pueda tener
 	private String contenido;
 	
 	
