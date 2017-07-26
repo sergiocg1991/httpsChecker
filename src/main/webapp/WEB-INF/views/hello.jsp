@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="ISO-8859-1"%>
-	<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -10,18 +10,13 @@
 </head>
 <body>
 	<h2>Hello, ${name}. Welcome to Spring MVC!</h2>
-	
-	
-	
-	 <c:forEach items="${urls}" var="url">
-    <h2>     
-        ${url}
-    </h2>
-</c:forEach>
-<util:list id="${urls}"
-value-type="Cars">
-</util:list>
-	
-	
+
+
+
+	<c:forEach items="${urls}" var="url">
+		<h2>${url}</h2>
+	</c:forEach>
+
+
 </body>
 </html>

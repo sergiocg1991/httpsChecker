@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import DTO.ComponenteWeb;
 import DTO.MiUrl;
 import clasesURL.HttpsValidacion;
 
@@ -32,18 +33,29 @@ public class HelloWorldController {
 		name = (name.split(","))[0];
 		
 		//variables raras raras
-		List<MiUrl> misurls = validacion.obtenerUrls(name);
+		List<ComponenteWeb> misurls = validacion.obtenerUrls(name);
 		
 		List<String> nombreurl = new ArrayList<String>();
 		
 		//llamar al metodo getCerts¿?¿?¿?¿
-		for(MiUrl urla: misurls){
-			nombreurl.add(urla.getUrlcompleta());
+		for(ComponenteWeb urla: misurls){
+			nombreurl.add(urla.getTipo());
 			}
 		
 		ModelAndView view = new ModelAndView("hello");
 		view.addObject("name", name);
 		view.addObject("urls", nombreurl);
+
+		return view;
+	}
+	
+	@RequestMapping("/detalles")
+	public ModelAndView detallesMessage() {
+		
+		
+		ModelAndView view = new ModelAndView("detalles");
+		view.addObject("name", "hola");
+		view.addObject("urls", "nombre");
 
 		return view;
 	}
