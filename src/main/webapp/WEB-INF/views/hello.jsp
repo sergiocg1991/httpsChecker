@@ -16,8 +16,11 @@
 	<c:forEach items="${urls}" var="url">
 		<h2>${url}</h2>
 	</c:forEach>
+<<<<<<< HEAD
 	<util:list id="${urls}" value-type="Cars">
 	</util:list>
+=======
+>>>>>>> refs/heads/master
 
 
 </body>
