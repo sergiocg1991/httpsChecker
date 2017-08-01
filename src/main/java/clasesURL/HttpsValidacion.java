@@ -18,6 +18,7 @@ import java.security.cert.Certificate;
 import org.springframework.stereotype.Component;
 
 import DTO.ComponenteWeb;
+import DTO.ListaComponeteWeb;
 import DTO.MiUrl;
 
 @Component
@@ -28,28 +29,25 @@ public class HttpsValidacion {
 			String inputText = "";
 			final int FINAL_CADENA_HTTP=5;
 			final int INICIO_CADENA_HTTP=1;
+<<<<<<< HEAD
 
+=======
+			int TAMANIO_INICIO_ETIQUETA = 200;
+			boolean flag = false;
+>>>>>>> refs/heads/master
 
 			public List<ComponenteWeb> obtenerUrls(String urlPrincipal){
 
 				
-				ArrayList<MiUrl> urlsPagWeb = new ArrayList<MiUrl>();
 				InputStreamReader isPaginas = null;
 				BufferedReader bfPaginas = null;
 				HttpURLConnection conexion = null;
 				URL url;
-				String[] links = new String[30];
-				int numeroLink = 0;
 				String etiquetaEnlace = "<";
-				boolean finEnlace = false;
 				String substringaux = "";
-				String enlace = "";
 				int inicioLink = 0;
-				int longitud = 0;
-				MiUrl urlaux = null;
 				String separadores = "[\\ \\>]";
-				
-				List<ComponenteWeb> listComponentes = new ArrayList<ComponenteWeb> ();
+				ListaComponeteWeb lista = new ListaComponeteWeb();
 				
 				try {
 					// Se abre la conexión
@@ -74,31 +72,34 @@ public class HttpsValidacion {
 					
 					while(inicioLink != -1){
 						
-						//los enlaces tras el href se encuentran entre '' o "", que localizamos en cadenas de 200 caracteres posteriores al href
-						substringaux = inputText.substring(inicioLink,inicioLink+7);
-						
-						//substringaux = substringaux.split(" ")[1];
-						
-						//creamos objeto con el enlace y lo añadimos a la lista
-						ComponenteWeb compoweb = new ComponenteWeb();
-						
-						compoweb.setTipo((substringaux.split(separadores)[0]).substring(1));
-//						compoweb.setContenido(substringaux.split(" ")[2]);
-						listComponentes.add(compoweb);
-						
-						
-//						if(substringaux.contains("\"")){
-//							substringaux = substringaux.split("\"")[1];
-//						}else{
-//							if(substringaux.contains("'")){
-//								substringaux = substringaux.split("'")[1];
-//						}
-//						}
-//						//solo guardaremos los enlaces HTTP o HTTPS
-//							if(esHTTP(substringaux)){
-//								urlaux = new MiUrl(substringaux);
-//								urlsPagWeb.add(urlaux);
+//						for (int i=0;i<TAMANIO_INICIO_ETIQUETA;i++) {
+//							if(inputText.charAt(inicioLink+i) == null){
+//								
 //							}
+//							
+//							
+//						}
+						
+						if((inicioLink+TAMANIO_INICIO_ETIQUETA)>inputText.length()){
+							substringaux = inputText.substring(inicioLink,inputText.length());
+						}else{
+						
+						
+						//los enlaces tras el href se encuentran entre '' o "", que localizamos en cadenas de 200 caracteres posteriores al href
+						substringaux = inputText.substring(inicioLink,inicioLink+TAMANIO_INICIO_ETIQUETA);
+						
+						
+						}
+							
+						
+						if ("img".compareTo((substringaux.split(separadores)[0]).substring(1)) == 0) {
+							lista.addImg("hola", "patimicoa");
+						}
+						if ("href".compareTo((substringaux.split(separadores)[0]).substring(1)) == 0) {
+							lista.addHref("adios", "patimicoa");
+						}
+						
+					
 							
 						//buscamos el siguente href
 						inicioLink = inputText.indexOf(etiquetaEnlace,inicioLink+1);
@@ -112,7 +113,7 @@ public class HttpsValidacion {
 				}
 				//borramos inputText para evitar que se sobeescriba el analisis con futuras busquedas
 				inputText="";
-				return (listComponentes);
+				return (lista.getLista());
 				
 			}
 			
