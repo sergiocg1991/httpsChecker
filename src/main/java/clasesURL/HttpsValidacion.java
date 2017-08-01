@@ -29,12 +29,9 @@ public class HttpsValidacion {
 			String inputText = "";
 			final int FINAL_CADENA_HTTP=5;
 			final int INICIO_CADENA_HTTP=1;
-<<<<<<< HEAD
-
-=======
 			int TAMANIO_INICIO_ETIQUETA = 200;
 			boolean flag = false;
->>>>>>> refs/heads/master
+
 
 			public List<ComponenteWeb> obtenerUrls(String urlPrincipal){
 
