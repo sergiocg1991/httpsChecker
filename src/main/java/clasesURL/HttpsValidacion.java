@@ -6,14 +6,12 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLConnection;
-import java.util.ArrayList;
+import java.security.cert.Certificate;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.net.ssl.HttpsURLConnection;
-import java.security.cert.Certificate;
 
 import org.springframework.stereotype.Component;
 
@@ -42,6 +40,8 @@ public class HttpsValidacion {
 				URL url;
 				String etiquetaEnlace = "<";
 				String substringaux = "";
+				String[] substringaux2;
+				String substringaux3 = "";
 				int inicioLink = 0;
 				String separadores = "[\\ \\>]";
 				ListaComponeteWeb lista = new ListaComponeteWeb();
@@ -83,16 +83,30 @@ public class HttpsValidacion {
 						
 						
 						//los enlaces tras el href se encuentran entre '' o "", que localizamos en cadenas de 200 caracteres posteriores al href
-						substringaux = inputText.substring(inicioLink,inicioLink+TAMANIO_INICIO_ETIQUETA);
+//						substringaux = inputText.substring(inicioLink,inicioLink+TAMANIO_INICIO_ETIQUETA);
 						
+							
+						substringaux = inputText.substring(inicioLink,inputText.length());
+						substringaux2 = substringaux.split("/>");
+						substringaux3 = substringaux2[0];
 						
+						//Para evitar trols
+						substringaux3 = substringaux3.toLowerCase();
 						}
 							
 						
-						if ("img".compareTo((substringaux.split(separadores)[0]).substring(1)) == 0) {
-							lista.addImg("hola", "patimicoa");
+						if ("img".compareTo((substringaux3.split(separadores)[0]).substring(1)) == 0) {
+
+							/*  Descomentar para mostrar toda la imagen mediante html
+							String contenido = substringaux3;
+							*/
+							
+							String contenido = (substringaux3.split("src")[1]).substring(1);
+							
+							
+							lista.addImg(contenido, "patimicoa");
 						}
-						if ("href".compareTo((substringaux.split(separadores)[0]).substring(1)) == 0) {
+						if ("a".compareTo((substringaux.split(separadores)[0]).substring(1)) == 0) {
 							lista.addHref("adios", "patimicoa");
 						}
 						
