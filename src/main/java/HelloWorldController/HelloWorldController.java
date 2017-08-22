@@ -39,7 +39,7 @@ public class HelloWorldController {
 		
 		//llamar al metodo getCerts¿?¿?¿?¿
 		for(ComponenteWeb urla: misurls){
-			nombreurl.add(urla.getTipo());
+			nombreurl.add(urla.getTipo() + "     -       " + urla.getContenido());
 			}
 		
 		ModelAndView view = new ModelAndView("hello");
