@@ -22,8 +22,6 @@ public class HelloWorldController {
 	
 	@Autowired
 	private HttpsValidacion validacion;
-
-	
 	
 	@RequestMapping("/hello")
 	public ModelAndView welcomeMessage(
@@ -32,19 +30,24 @@ public class HelloWorldController {
 
 		name = (name.split(","))[0];
 		
-		//variables raras raras
+	
 		List<ComponenteWeb> misurls = validacion.obtenerUrls(name);
+		
+//		int numeroImg = misurls.get;
+//		int numeroHref = 
 		
 		List<String> nombreurl = new ArrayList<String>();
 		
-		//llamar al metodo getCerts¿?¿?¿?¿
 		for(ComponenteWeb urla: misurls){
 			nombreurl.add(urla.getTipo() + "     -       " + urla.getContenido());
 			}
 		
 		ModelAndView view = new ModelAndView("hello");
 		view.addObject("name", name);
-		view.addObject("urls", nombreurl);
+		view.addObject("enlaces", nombreurl);
+//		view.addObject("numImg", numeroImg);
+//		view.addObject("numHref", numeroHref);
+//		view.addObject("numScript", numeroScript);
 
 		return view;
 	}

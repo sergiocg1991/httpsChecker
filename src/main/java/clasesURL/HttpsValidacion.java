@@ -16,7 +16,7 @@ import javax.net.ssl.HttpsURLConnection;
 import org.springframework.stereotype.Component;
 
 import DTO.ComponenteWeb;
-import DTO.ListaComponeteWeb;
+import DTO.ListaComponenteWeb;
 import DTO.MiUrl;
 
 @Component
@@ -44,7 +44,7 @@ public class HttpsValidacion {
 				String substringaux3 = "";
 				int inicioLink = 0;
 				String separadores = "[\\ \\>]";
-				ListaComponeteWeb lista = new ListaComponeteWeb();
+				ListaComponenteWeb lista = new ListaComponenteWeb();
 				
 				try {
 					// Se abre la conexión
@@ -57,32 +57,23 @@ public class HttpsValidacion {
 					isPaginas = new InputStreamReader(url.openStream());
 					bfPaginas = new BufferedReader(isPaginas);
 					
-					// Introducimos el HTML de la pagina en un string 
+					// Introducimos el código HTML de la pagina en un string 
 					while ((inputLine = bfPaginas.readLine()) != null) {
 						inputText = inputText + inputLine;
 					}
 
 	
-					//Buscamos los href que señalan el inicio de enlaces en HTML
+					//Buscamos los < que abren las etiquetas en html
 					inicioLink = inputText.indexOf(etiquetaEnlace);
 					
 					
 					while(inicioLink != -1){
 						
-//						for (int i=0;i<TAMANIO_INICIO_ETIQUETA;i++) {
-//							if(inputText.charAt(inicioLink+i) == null){
-//								
-//							}
-//							
-//							
-//						}
-						
+
 						if((inicioLink+TAMANIO_INICIO_ETIQUETA)>inputText.length()){
 							substringaux = inputText.substring(inicioLink,inputText.length());
 						}else{
 						
-						
-						//los enlaces tras el href se encuentran entre '' o "", que localizamos en cadenas de 200 caracteres posteriores al href
 //						substringaux = inputText.substring(inicioLink,inicioLink+TAMANIO_INICIO_ETIQUETA);
 						
 							
@@ -90,7 +81,7 @@ public class HttpsValidacion {
 						substringaux2 = substringaux.split("/>");
 						substringaux3 = substringaux2[0];
 						
-						//Para evitar trols
+						//Para evitar fallos al buscar
 						substringaux3 = substringaux3.toLowerCase();
 						}
 							
@@ -101,18 +92,33 @@ public class HttpsValidacion {
 							String contenido = substringaux3;
 							*/
 							
-							String contenido = (substringaux3.split("src")[1]).substring(1);
+							String auxs = (substringaux3.split("src")[1]).substring(1);
+							String contenido = auxs.split("\"")[1];
+
 							
-							
-							lista.addImg(contenido, "patimicoa");
+							lista.addImg(contenido, "a");
 						}
-						if ("a".compareTo((substringaux.split(separadores)[0]).substring(1)) == 0) {
-							lista.addHref("adios", "patimicoa");
-						}
-						
-					
+						if ("a".compareTo((substringaux3.split(separadores)[0]).substring(1)) == 0) {
 							
-						//buscamos el siguente href
+							String auxs = (substringaux3.split("href")[1]).substring(1);
+							String contenido = auxs.split(">")[0];
+							if(esHTTPS(contenido)){
+								lista.addHref(contenido, "HTTPS");
+							}else{
+								if(esHTTP(contenido)){
+									lista.addHref(contenido, "HTTP");
+								}
+								}
+						}
+//						if ("script".compareTo((substringaux3.split(separadores)[0]).substring(1)) == 0) {
+//							String auxs = (substringaux3.split("src")[1]).substring(1);
+//							String contenido = auxs.split("\"")[1];
+//
+//							
+//							lista.addScript(contenido, "a");
+//						}
+							
+						//buscamos el siguente enlace
 						inicioLink = inputText.indexOf(etiquetaEnlace,inicioLink+1);
 					}
 	

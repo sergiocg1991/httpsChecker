@@ -4,7 +4,7 @@ public enum TiposComponentes {
 
 	        a,
 	        img,
-	        span;
+	        script;
 
 	 
 }

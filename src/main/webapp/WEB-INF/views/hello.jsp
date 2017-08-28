@@ -5,22 +5,42 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Spring 4 MVC</title>
+<title>Página en analisis</title>
 <%@ page isELIgnored="false"%>
 </head>
 <body>
-	<h2>Hello, ${name}. Welcome to Spring MVC!</h2>
+	<h2>Bienvenido!! <br> Analizando ${name}:</h2>
+	<table>
+<tr>
+  <td><strong>Tipo Enlace</strong></td>
+  <td><strong>Cantidad</strong></td>
+  <td><strong>Seguridad</strong></td>
+</tr>
+ 
+<tr>
+  <td><strong>Imágenes</strong></td>
+  <td>$[numImg]</td>
+  <td>-</td>
+</tr>
+ 
+<tr>
+  <td><strong>web</strong></td>
+  <td>$[numHref]</td>
+  <td>HTTP:numHTTP       HTTPS:numHTTPS</td>
+</tr>
+ 
+<tr>
+  <td><strong>Sript</strong></td>
+  <td>[numScrip]</td>
+  <td>-</td>
+</tr>
+</table>
 
 
 
-	<c:forEach items="${urls}" var="url">
-		<h2>${url}</h2>
+	<c:forEach items="${enlaces}" var="url">
+		<h4>${url}</h4>
 	</c:forEach>
-<<<<<<< HEAD
-	<util:list id="${urls}" value-type="Cars">
-	</util:list>
-=======
->>>>>>> refs/heads/master
 
 
 </body>

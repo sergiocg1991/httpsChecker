@@ -4,16 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class ListaComponeteWeb {
+public class ListaComponenteWeb {
 	
 	private List<ComponenteWeb> lista;
 	private int img;
 	private int href;
+	private int script;
 	
-	
-	public ListaComponeteWeb(){
+	public ListaComponenteWeb(){
 		img=0;
 		href=0;
+		script=0;
 		lista = new ArrayList<ComponenteWeb> ();
 	}
 	
@@ -30,6 +31,16 @@ public class ListaComponeteWeb {
 		return true;
 		
 	}
+	public boolean addScript(String contenido,String seguridad){
+		
+		ComponenteWeb aux = new ComponenteWeb("script",contenido,seguridad);
+		
+		lista.add(aux);
+		
+		img++;
+		
+		return true;
+	}	
 	
 	public boolean addHref(String contenido,String seguridad){
 		
