@@ -91,31 +91,53 @@ public class HttpsValidacion {
 							/*  Descomentar para mostrar toda la imagen mediante html
 							String contenido = substringaux3;
 							*/
+							if(substringaux3.contains("src")){
+								String auxs = (substringaux3.split("src")[1]).substring(1);
+								String contenido = "";
+								if(auxs.contains("\"")){
+									contenido = auxs.split("\"")[1];
+								}
+								
+								if(auxs.contains("\'")){
+									contenido = auxs.split("\'")[1];
+								}
 							
-							String auxs = (substringaux3.split("src")[1]).substring(1);
-							String contenido = auxs.split("\"")[1];
-
-							
-							lista.addImg(contenido, "a");
+								lista.addImg(contenido, "a");
+							}
 						}
 						if ("a".compareTo((substringaux3.split(separadores)[0]).substring(1)) == 0) {
-							
-							String auxs = (substringaux3.split("href")[1]).substring(1);
-							String contenido = auxs.split(">")[0];
-							if(esHTTPS(contenido)){
-								lista.addHttps(contenido, "HTTPS");
-							}else{
-								if(esHTTP(contenido)){
-									lista.addHttp(contenido, "HTTP");
+							if(substringaux3.contains("href")){
+								String auxs = (substringaux3.split("href")[1]).substring(1);
+								String contenido = "";
+								
+								if(auxs.contains(">")){
+									contenido = auxs.split(">")[0];
+									if(esHTTPS(contenido)){
+										lista.addHttps(contenido, "HTTPS");
+									}else{
+										if(esHTTP(contenido)){
+											lista.addHttp(contenido, "HTTP");
+										}
+									}
 								}
-								}
+								
+							}
 						}
 						if ("script".compareTo((substringaux3.split(separadores)[0]).substring(1)) == 0) {
-							String contenido = (substringaux3.split("src=")[1]).substring(1);
-//							String contenido = auxs.split("\"")[1];
-
-							
-							lista.addScript(contenido, "a");
+							if(substringaux3.contains("src=")){
+								String auxs = (substringaux3.split("src=")[1]).substring(1);
+								String contenido = "";
+								
+								if(auxs.contains("\"")){
+									contenido = auxs.split("\"")[1];
+								}
+								
+								if(auxs.contains("\'")){
+									contenido = auxs.split("\'")[1];
+								}
+								
+								lista.addScript(contenido, "a");
+							}
 						}
 							
 						//buscamos el siguente enlace
