@@ -8,12 +8,17 @@ public class ListaComponenteWeb {
 	
 	private List<ComponenteWeb> lista;
 	private int img;
-	private int href;
+	private int https;
+	private int http;
 	private int script;
 	
+
+
+
 	public ListaComponenteWeb(){
 		img=0;
-		href=0;
+		http=0;
+		https=0;
 		script=0;
 		lista = new ArrayList<ComponenteWeb> ();
 	}
@@ -37,31 +42,52 @@ public class ListaComponenteWeb {
 		
 		lista.add(aux);
 		
-		img++;
+		script++;
 		
 		return true;
 	}	
 	
-	public boolean addHref(String contenido,String seguridad){
+	public boolean addHttp(String contenido,String seguridad){
 		
-		ComponenteWeb aux = new ComponenteWeb("href",contenido,seguridad);
+		ComponenteWeb aux = new ComponenteWeb("http",contenido,seguridad);
 		
 		lista.add(aux);
 		
-		href++;
+		http++;
+		
+		return true;
+		
+	}
+	
+	public boolean addHttps(String contenido,String seguridad){
+		
+		ComponenteWeb aux = new ComponenteWeb("https",contenido,seguridad);
+		
+		lista.add(aux);
+		
+		https++;
 		
 		return true;
 		
 	}
 	
 	
-	public int getHref() {
-		return href;
+	public int getHttp() {
+		return http;
 	}
 
 
-	public void setHref(int href) {
-		this.href = href;
+	public void setHttps(int href) {
+		this.https = https;
+	}
+	
+	public int getHttps() {
+		return https;
+	}
+
+
+	public void setHttp(int href) {
+		this.http = http;
 	}
 	
 	
@@ -84,6 +110,15 @@ public class ListaComponenteWeb {
 		this.img = img;
 	}
 
+	public int getScript() {
+		return script;
+	}
+
+
+
+	public void setScript(int script) {
+		this.script = script;
+	}
 
 
 

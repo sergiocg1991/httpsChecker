@@ -14,24 +14,21 @@
 <tr>
   <td><strong>Tipo Enlace</strong></td>
   <td><strong>Cantidad</strong></td>
-  <td><strong>Seguridad</strong></td>
 </tr>
  
 <tr>
   <td><strong>Imágenes</strong></td>
-  <td>$[numImg]</td>
-  <td>-</td>
+  <td>${numImg}</td>
 </tr>
  
 <tr>
   <td><strong>web</strong></td>
-  <td>$[numHref]</td>
-  <td>HTTP:numHTTP       HTTPS:numHTTPS</td>
+  <td>HTTP:${numHttp}       HTTPS:${numHttps}</td>
 </tr>
  
 <tr>
   <td><strong>Sript</strong></td>
-  <td>[numScrip]</td>
+  <td>${numScript}</td>
   <td>-</td>
 </tr>
 </table>

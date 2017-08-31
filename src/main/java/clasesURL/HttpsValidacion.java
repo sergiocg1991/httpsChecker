@@ -27,11 +27,11 @@ public class HttpsValidacion {
 			String inputText = "";
 			final int FINAL_CADENA_HTTP=5;
 			final int INICIO_CADENA_HTTP=1;
-			int TAMANIO_INICIO_ETIQUETA = 200;
+			int TAMANIO_INICIO_ETIQUETA =200;
 			boolean flag = false;
 
 
-			public List<ComponenteWeb> obtenerUrls(String urlPrincipal){
+			public ListaComponenteWeb obtenerUrls(String urlPrincipal){
 
 				
 				InputStreamReader isPaginas = null;
@@ -103,20 +103,20 @@ public class HttpsValidacion {
 							String auxs = (substringaux3.split("href")[1]).substring(1);
 							String contenido = auxs.split(">")[0];
 							if(esHTTPS(contenido)){
-								lista.addHref(contenido, "HTTPS");
+								lista.addHttps(contenido, "HTTPS");
 							}else{
 								if(esHTTP(contenido)){
-									lista.addHref(contenido, "HTTP");
+									lista.addHttp(contenido, "HTTP");
 								}
 								}
 						}
-//						if ("script".compareTo((substringaux3.split(separadores)[0]).substring(1)) == 0) {
-//							String auxs = (substringaux3.split("src")[1]).substring(1);
+						if ("script".compareTo((substringaux3.split(separadores)[0]).substring(1)) == 0) {
+							String contenido = (substringaux3.split("src=")[1]).substring(1);
 //							String contenido = auxs.split("\"")[1];
-//
-//							
-//							lista.addScript(contenido, "a");
-//						}
+
+							
+							lista.addScript(contenido, "a");
+						}
 							
 						//buscamos el siguente enlace
 						inicioLink = inputText.indexOf(etiquetaEnlace,inicioLink+1);
@@ -130,7 +130,7 @@ public class HttpsValidacion {
 				}
 				//borramos inputText para evitar que se sobeescriba el analisis con futuras busquedas
 				inputText="";
-				return (lista.getLista());
+				return lista;
 				
 			}
 			

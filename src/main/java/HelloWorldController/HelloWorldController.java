@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import DTO.ComponenteWeb;
+import DTO.ListaComponenteWeb;
 import DTO.MiUrl;
 import clasesURL.HttpsValidacion;
 
@@ -31,23 +32,24 @@ public class HelloWorldController {
 		name = (name.split(","))[0];
 		
 	
-		List<ComponenteWeb> misurls = validacion.obtenerUrls(name);
+		ListaComponenteWeb misurls = validacion.obtenerUrls(name);
 		
 //		int numeroImg = misurls.get;
 //		int numeroHref = 
 		
 		List<String> nombreurl = new ArrayList<String>();
 		
-		for(ComponenteWeb urla: misurls){
+		for(ComponenteWeb urla: misurls.getLista()){
 			nombreurl.add(urla.getTipo() + "     -       " + urla.getContenido());
 			}
 		
 		ModelAndView view = new ModelAndView("hello");
 		view.addObject("name", name);
 		view.addObject("enlaces", nombreurl);
-//		view.addObject("numImg", numeroImg);
-//		view.addObject("numHref", numeroHref);
-//		view.addObject("numScript", numeroScript);
+		view.addObject("numImg", misurls.getImg());
+		view.addObject("numHttp", misurls.getHttp());
+		view.addObject("numHttps", misurls.getHttps());
+		view.addObject("numScript", misurls.getScript());
 
 		return view;
 	}
