@@ -27,7 +27,7 @@
 </tr>
  
 <tr>
-  <td><strong>Sript</strong></td>
+  <td><strong>Script</strong></td>
   <td>${numScript}</td>
   <td>-</td>
 </tr>
