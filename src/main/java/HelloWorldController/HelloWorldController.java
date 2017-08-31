@@ -33,9 +33,7 @@ public class HelloWorldController {
 		
 	
 		ListaComponenteWeb misurls = validacion.obtenerUrls(name);
-		
-//		int numeroImg = misurls.get;
-//		int numeroHref = 
+
 		
 		List<String> nombreurl = new ArrayList<String>();
 		
