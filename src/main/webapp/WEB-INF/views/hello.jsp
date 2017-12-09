@@ -7,37 +7,43 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Página en analisis</title>
 <%@ page isELIgnored="false"%>
+<link rel="stylesheet" type="text/css" href="resources/style.css"/>
 </head>
 <body>
-	<h2>Bienvenido!! <br> Analizando ${name}:</h2>
-	<table>
-<tr>
-  <td><strong>Tipo Enlace</strong></td>
-  <td><strong>Cantidad</strong></td>
-</tr>
- 
-<tr>
-  <td><strong>Imágenes</strong></td>
-  <td>${numImg}</td>
-</tr>
- 
-<tr>
-  <td><strong>web</strong></td>
-  <td>HTTP:${numHttp}       HTTPS:${numHttps}</td>
-</tr>
- 
-<tr>
-  <td><strong>Script</strong></td>
-  <td>${numScript}</td>
-  <td>-</td>
-</tr>
-</table>
+	<h2 class="miguel">
+		Bienvenido!! <br> Analizando ${name}:
+	</h2>
+	<div class="datagrid">
+		<table>
+			<tr>
+				<td><strong>Tipo Enlace</strong></td>
+				<td><strong>Cantidad</strong></td>
+			</tr>
+
+			<tr>
+				<td><strong>Imágenes</strong></td>
+				<td>${numImg}</td>
+			</tr>
+
+			<tr>
+				<td><strong>web</strong></td>
+				<td>HTTP:${numHttp} HTTPS:${numHttps}</td>
+			</tr>
+
+			<tr>
+				<td><strong>Script</strong></td>
+				<td>${numScript}</td>
+				<td>-</td>
+			</tr>
+		</table>
 
 
 
-	<c:forEach items="${enlaces}" var="url">
-		<h4>${url}</h4>
-	</c:forEach>
+		<c:forEach items="${enlaces}" var="url">
+			<h4>${url}</h4>
+		</c:forEach>
+
+	</div>
 
 
 </body>
