@@ -31,6 +31,33 @@
   <td>${numScript}</td>
 </tr>
 </table>
+	<h2 class="miguel">
+		Bienvenido!! <br> Analizando ${name}:
+	</h2>
+	<div class="datagrid">
+		<table>
+			<tr>
+				<td><strong>Tipo Enlace</strong></td>
+				<td><strong>Cantidad</strong></td>
+			</tr>
+
+			<tr>
+				<td><strong>Imágenes</strong></td>
+				<td>${numImg}</td>
+			</tr>
+
+			<tr>
+				<td><strong>web</strong></td>
+				<td>HTTP:${numHttp} HTTPS:${numHttps}</td>
+			</tr>
+
+			<tr>
+				<td><strong>Script</strong></td>
+				<td>${numScript}</td>
+				<td>-</td>
+			</tr>
+		</table>
+
 
 
 
