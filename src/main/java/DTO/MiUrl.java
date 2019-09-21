@@ -20,7 +20,9 @@ public class MiUrl {
 	}
 	
 	
-	
+	public MiUrl() {
+		
+	}
 	
 	public String getInicio() {
 		return inicio;

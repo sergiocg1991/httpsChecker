@@ -18,6 +18,7 @@ import org.springframework.stereotype.Component;
 import DTO.ComponenteWeb;
 import DTO.ListaComponenteWeb;
 import DTO.MiUrl;
+import oracle.jrockit.jfr.tools.ConCatRepository;
 
 @Component
 public class HttpsValidacion {
@@ -29,6 +30,8 @@ public class HttpsValidacion {
 			final int INICIO_CADENA_HTTP=1;
 			int TAMANIO_INICIO_ETIQUETA =200;
 			boolean flag = false;
+			Certificate[] pene;
+			HttpsURLConnection con;
 
 
 			public ListaComponenteWeb obtenerUrls(String urlPrincipal){
@@ -60,6 +63,7 @@ public class HttpsValidacion {
 					// Introducimos el código HTML de la pagina en un string 
 					while ((inputLine = bfPaginas.readLine()) != null) {
 						inputText = inputText + inputLine;
+						
 					}
 
 	
@@ -113,7 +117,11 @@ public class HttpsValidacion {
 								if(auxs.contains(">")){
 									contenido = auxs.split(">")[0];
 									if(esHTTPS(contenido)){
+										contenido=contenido.split("\"")[1];
 										lista.addHttps(contenido, "HTTPS");
+										MiUrl enlace = new MiUrl();
+										enlace.setUrlcompleta(contenido);
+										pene=this.getCerts(enlace);
 									}else{
 										if(esHTTP(contenido)){
 											lista.addHttp(contenido, "HTTP");
@@ -157,13 +165,13 @@ public class HttpsValidacion {
 			}
 			
 			public boolean esHTTP(String link){
-				if(link.contains("http")){
+				if(link.startsWith("\"http")){
 					return true;
 				}
 				return false;
 			}
 			public boolean esHTTPS(String link){
-				if(link.contains("https")){
+				if(link.startsWith("\"https")){
 					return true;
 				}
 				return false;
@@ -173,17 +181,23 @@ public class HttpsValidacion {
 				Certificate[] certs=null;
 				String dir = enlace.getUrlcompleta();
 				URL urlaux;
+				
 				try {
 					urlaux = new URL(dir);
+					
 				
-				HttpsURLConnection con = (HttpsURLConnection) urlaux.openConnection();
+				con = (HttpsURLConnection) urlaux.openConnection();
+				
 				con.connect();
 				certs = con.getServerCertificates();
+				con.disconnect();
+				
 				} catch (MalformedURLException e) {
 					Logger.getGlobal().log(Level.SEVERE, "URL introducida no es correcta" + e.getMessage());
 				} catch (IOException e) {
 					Logger.getGlobal().log(Level.SEVERE, "URL introducida no es correcta 2" + e.getMessage());
 				}
+			
 				return certs;
 			}
 }
